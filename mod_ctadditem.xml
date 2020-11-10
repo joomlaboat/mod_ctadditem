@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="1.6.0" client="site"  method="upgrade">
+    <name>Custom Tables - Add Record</name>
+    <author>Ivan komlev</author>
+    <creationDate>February 2019</creationDate>
+    <copyright>Copyright (C) 2010-2019 Ivan Komlev. All rights reserved.</copyright>
+    <license>GNU General Public License</license>
+    <authorEmail>support@joomlaboat.com</authorEmail>
+    <authorUrl>http://www.joomlaboat.com/</authorUrl>
+    <version>1.0.0</version>
+    <description>Catsom Tables module to add new records.</description>
+    <files>
+        <filename module="mod_ctadditem">mod_ctadditem.php</filename>
+		<filename>index.html</filename>
+    </files>
+
+    <config>
+	<fields
+                name="params"
+
+        >
+
+		<fieldset name="basic" addfieldpath="components/com_customtables/fields/">
+
+            <field type="estable" name="establename" default="" label="Select Table" description="Select Listing Table" />
+
+			<field type="text" name="useridfield" default="" label="Custom UserID Field" description="This to check if record belongs to user." />
+
+			<field type="list" name="publishstatus" default="1" label="Publish it" description="" >
+                <option value="1">Published</option>
+				<option value="0">Not Published</option>
+			</field>
+
+			<field name="addusergroups" type="usergroup" default="" label="Who may add content" description="Select a user group that may add the records." />
+			<field name="editusergroups" type="usergroup" default="" label="Who may edit content" description="Select a user group that may edit records." />
+			<field name="publishusergroups" type="usergroup" default="" label="Who may publish records (Admin)" description="Select a user group that may publish/unpublish records." />
+			<field name="deleteusergroups" type="usergroup" default="" label="Who may delete records" description="Select a user group that may delete records." />
+
+
+            <field type="text" name="customitemid" default="" size="70" label="Custom Itemid" description="" />
+			<field type="text" name="listingid" default="" size="70" label="Custom Listing ID" description="" />
+
+            <field type="text" name="returnto" default="" size="70" label="Custom Return To" description="Visitor will be redireced to this link when form is complited. Active value (may include value(s) of field(s) use [fieldname] to get the value) " />
+
+			<field type="list" name="guestcanaddnew" default="0" label="Guest can add new records" description="" >
+	                	<option value="1">Guest can add new records</option>
+				<option value="0">Only registred can add new records</option>
+				<option value="-1">Disable Add New records</option>
+			</field>
+            
+            <field type="radio" name="allowcontentplugins" default="0" label="Allow Content Plugins" description="" class="btn-group btn-group-yesno">
+		                <option value="1">Yes</option>
+				<option value="0">No</option>
+			</field>
+
+
+			<field type="text" name="requiredlabel" filter="raw" default="" size="70" label="Required Label" description="Character or a text to show next to required field if there is one." />
+
+
+<field type="eseditlayout" name="eseditlayout" default="" label="Edit Layout" description="Select Edit Layout" />
+<!--
+
+
+			<field type="radio" name="allowcontentplugins" default="0" label="Allow Content Plugins" description="Let content plugins parse output content." class="btn-group btn-group-yesno" >
+            <option value="1">Yes</option>
+				<option value="0">No</option>
+			</field>
+
+
+			<field type="text" name="msgitemissaved" default="" size="70" label="Item Saved Message" description="This message will show up on the record (item) being saved." />
+
+			<field type="list" name="onrecordaddsendemail" default="0" label="Send Email When record" description="" >
+                		<option value="1">Added</option>
+				<option value="2">Saved</option>
+				<option value="3">On Conditions</option>
+				<option value="0">Do not send</option>
+			</field>
+
+
+
+
+
+
+
+
+			<field type="text" name="sendemailcondition" default="" size="50" label="Send Email Condition" description="Example: approved=1 or name=ivan" />
+
+			<field type="text" name="onrecordaddsendemailto" default="" size="50" label="On Record Add Send Email to" description="The email with the data filled in the form will be sent to this email. More than one email are ok. Separate them with comma.
+
+						Also you may use a value of the field of the table to send the message to the email address just typed by one who filled the form.
+						Also to have your own Email Subject type : after email and then the subject.
+						Example 1: [email]
+						Example 2: test@yahoo.com
+						Example 3: [email]:Thank you for participation
+						" />
+
+			<field type="text" name="onrecordsavesendemailto" default="" size="50" label="On Record Edit Send Email to" description="The email with the data filled in the form will be sent to this email. More than one email are ok. Separate them with comma.
+
+						Also you may use a value of the field of the table to send the message to the email address just typed by one who filled the form.
+						Also to have your own Email Subject type : after email and then the subject.
+						Example 1: [email]
+						Example 2: test@yahoo.com,test@gmail.com,[email]
+						Example 3: [email]:Thank you for participation
+						" />
+
+			<field type="esemaillayout" name="onrecordaddsendemaillayout" default="" label="Email Layout" description="Email Layout" />
+
+-->
+
+		</fieldset>
+    </fields>
+    </config>
+</extension>
