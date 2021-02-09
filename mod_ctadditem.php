@@ -38,6 +38,17 @@ if(!class_exists('ModCustomTablesViewEditItem'))
 			$user =  JFactory::getUser();
 			$this->userid = (int)$user->get('id');
 			
+			
+			$mainframe = JFactory::getApplication();
+			if($mainframe->getCfg( 'sef' ))
+			{
+				$WebsiteRoot=JURI::root(true);
+				if($WebsiteRoot=='' or $WebsiteRoot[strlen($WebsiteRoot)-1]!='/') //Root must have slash / in the end
+					$WebsiteRoot.='/';
+			}
+			else
+				$WebsiteRoot='';
+			
 			$this->formLink=$WebsiteRoot.'index.php?option=com_customtables&amp;view=edititem'.($this->Model->Itemid!=0 ? '&amp;Itemid='.$this->Model->Itemid : '');//.'&amp;lang='.$lang;
 			$this->formName='eseditForm';
 			$this->formClass='form-validate form-horizontal well';

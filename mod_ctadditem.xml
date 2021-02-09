@@ -8,7 +8,7 @@
     <authorEmail>support@joomlaboat.com</authorEmail>
     <authorUrl>http://www.joomlaboat.com/</authorUrl>
     <version>1.0.0</version>
-    <description>Catsom Tables module to add new records.</description>
+    <description>Cutsom Tables module to add new records.</description>
     <files>
         <filename module="mod_ctadditem">mod_ctadditem.php</filename>
 		<filename>index.html</filename>
