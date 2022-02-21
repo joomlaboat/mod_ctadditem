@@ -1,12 +1,10 @@
 <?php
 /**
- * CustomTables Joomla! 3.x Native Component
- * @version 1.0.0
+ * CustomTables Joomla! 3.x & 4.x Native Component
  * @author Ivan komlev <support@joomlaboat.com>
  * @link http://www.joomlaboat.com
  * @license GNU/GPL
  **/
-
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
@@ -19,26 +17,12 @@ if(!class_exists('ModCustomTablesViewEditItem'))
 {
 	class ModCustomTablesViewEditItem extends JViewLegacy
 	{
-		var $params;
 		var $Model;
-		var $row;
-		var $langindex;
-		var $userid;
-		var $listing_id;
-		var $esfields;
 
 		function RenderForm()
 		{
-			$this->row=array();
+			$row=array();
 
-			$this->listing_id=0;
-			$this->esfields=$this->Model->esfields;
-			$this->params=$this->Model->params;
-
-			$user =  JFactory::getUser();
-			$this->userid = (int)$user->get('id');
-			
-			
 			$mainframe = JFactory::getApplication();
 			if($mainframe->getCfg( 'sef' ))
 			{
@@ -49,12 +33,17 @@ if(!class_exists('ModCustomTablesViewEditItem'))
 			else
 				$WebsiteRoot='';
 			
-			$this->formLink=$WebsiteRoot.'index.php?option=com_customtables&amp;view=edititem'.($this->Model->Itemid!=0 ? '&amp;Itemid='.$this->Model->Itemid : '');//.'&amp;lang='.$lang;
+			//print_r($this->Model->params);
+			//$id = $params->get('id');
+			
+			//echo '$id='.$id;
+			
+			$this->formLink=$WebsiteRoot.'index.php?option=com_customtables&amp;'
+				.'view=edititem'.($this->Model->ct->Env->Itemid!=0 ? '&amp;Itemid='.$this->Model->ct->Env->Itemid : '');
+				
 			$this->formName='eseditForm';
-			$this->formClass='form-validate form-horizontal well';
-			$this->formAttribute=' onsubmit="return checkRequiredFields();"';
 
-			require(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_customtables'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'edititem'.DIRECTORY_SEPARATOR.'tmpl'.DIRECTORY_SEPARATOR.'default.php');
+			CTViewEdit($this->Model->ct, $row, $this->Model->pagelayout, $this->Model->BlockExternalVars,$this->formLink,$this->formName);
 		}
 	}
 }
@@ -62,8 +51,6 @@ if(!class_exists('ModCustomTablesViewEditItem'))
 $config=array();
 $a=new ModCustomTablesViewEditItem;
 
-$a->params=$params;
 $a->Model= JModelLegacy::getInstance('EditItem', 'CustomTablesModel', $config);
 $a->Model->load($params,true);
-
 $a->RenderForm();
