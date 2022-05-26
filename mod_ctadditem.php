@@ -27,17 +27,12 @@ if(!class_exists('ModCustomTablesViewEditItem'))
 			if($mainframe->getCfg( 'sef' ))
 			{
 				$WebsiteRoot=JURI::root(true);
-				if($WebsiteRoot=='' or $WebsiteRoot[strlen($WebsiteRoot)-1]!='/') //Root must have slash / in the end
+				if($WebsiteRoot=='' or $WebsiteRoot[strlen($WebsiteRoot)-1]!='/') //Root must have the slash character "/" in the end
 					$WebsiteRoot.='/';
 			}
 			else
 				$WebsiteRoot='';
-			
-			//print_r($this->Model->params);
-			//$id = $params->get('id');
-			
-			//echo '$id='.$id;
-			
+
 			$this->formLink=$WebsiteRoot.'index.php?option=com_customtables&amp;'
 				.'view=edititem'.($this->Model->ct->Env->Itemid!=0 ? '&amp;Itemid='.$this->Model->ct->Env->Itemid : '');
 				
