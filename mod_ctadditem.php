@@ -9,42 +9,11 @@
 // no direct access
 use CustomTables\CT;
 use CustomTables\CTUser;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.html.pane');
-
-require_once(JPATH_SITE.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'com_customtables'.DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'edititem.php');
-
-if(!class_exists('ModCustomTablesViewEditItem'))
-{
-	class ModCustomTablesViewEditItem extends JViewLegacy
-	{
-		var $Model;
-
-		function RenderForm()
-		{
-			$row=array();
-
-			$mainframe = JFactory::getApplication();
-			if($mainframe->getCfg( 'sef' ))
-			{
-				$WebsiteRoot=JURI::root(true);
-				if($WebsiteRoot=='' or $WebsiteRoot[strlen($WebsiteRoot)-1]!='/') //Root must have the slash character "/" in the end
-					$WebsiteRoot.='/';
-			}
-			else
-				$WebsiteRoot='';
-
-			$this->formLink=$WebsiteRoot.'index.php?option=com_customtables&amp;'
-				.'view=edititem'.($this->Model->ct->Env->Itemid!=0 ? '&amp;Itemid='.$this->Model->ct->Env->Itemid : '');
-				
-			$this->formName='eseditForm';
-
-			CTViewEdit($this->Model->ct, $row, $this->Model->pagelayout, $this->Model->BlockExternalVars,$this->formLink,$this->formName);
-		}
-	}
-}
 
 $path = JPATH_SITE . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_customtables'
     . DIRECTORY_SEPARATOR . 'libraries' . DIRECTORY_SEPARATOR . 'customtables' . DIRECTORY_SEPARATOR;
@@ -52,13 +21,7 @@ $path = JPATH_SITE . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 
 require_once($path.'loader.php');
 CTLoader();
 
-$config=array();
-
-$Model = JModelLegacy::getInstance('EditItem', 'CustomTablesModel', $config);
-
-$ct = new CT($params, true, $module->id);
-
-$Model->load($ct,true);
+$ct = new CT($params,true,$module->id);
 
 if (!CTUser::CheckAuthorization($ct)) {
     //not authorized
@@ -66,11 +29,17 @@ if (!CTUser::CheckAuthorization($ct)) {
     return false;
 }
 
+$tableName = $params['establename'];
+$ct->getTable($tableName);
 if (!isset($ct->Table->fields) or !is_array($ct->Table->fields))
     return false;
 
 $formLink = $ct->Env->WebsiteRoot . 'index.php?option=com_customtables&amp;view=edititem' . ($ct->Params->ItemId != 0 ? '&amp;Itemid=' . $ct->Params->ItemId : '');
-if (!is_null($ct->Params->ModuleId))
-    $formLink .= '&amp;ModuleId=' . $ct->Params->ModuleId;
+//if (!is_null($ct->Params->ModuleId))
+    $formLink .= '&amp;ModuleId=' . $module->id;
 
-CTViewEdit($ct, $Model->row, $Model->pagelayout, $formLink, 'eseditForm');
+$editForm = new Edit($ct);
+$editForm->load();
+
+// Display the template
+echo $editForm->render(null, $formLink, 'ctEditForm');
