@@ -23,7 +23,7 @@ CTLoader();
 
 $ct = new CT($params,true,$module->id);
 
-if (!CTUser::CheckAuthorization($ct)) {
+if (!$ct->CheckAuthorization(1)) {
     //not authorized
     Factory::getApplication()->enqueueMessage(JoomlaBasicMisc::JTextExtended('COM_CUSTOMTABLES_NOT_AUTHORIZED'), 'error');
     return false;
