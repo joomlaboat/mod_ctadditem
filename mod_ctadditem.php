@@ -25,7 +25,7 @@ $ct = new CT($params,true,$module->id);
 
 if (!$ct->CheckAuthorization(1)) {
     //not authorized
-    Factory::getApplication()->enqueueMessage(JoomlaBasicMisc::JTextExtended('COM_CUSTOMTABLES_NOT_AUTHORIZED'), 'error');
+    Factory::getApplication()->enqueueMessage(CTMiscHelper::JTextExtended('COM_CUSTOMTABLES_NOT_AUTHORIZED'), 'error');
     return false;
 }
 
