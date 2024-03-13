@@ -6,12 +6,17 @@
  * @license GNU/GPL
  **/
 
+namespace CustomTables;
+
 // no direct access
+defined('_JEXEC') or die('Restricted access');
+
 use CustomTables\CT;
 use CustomTables\CTUser;
+use CustomTables\Params;
+use CustomTables\Edit;
+use CustomTables\common;
 use Joomla\CMS\Factory;
-
-defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.html.pane');
 
@@ -21,11 +26,12 @@ $path = JPATH_SITE . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 
 require_once($path . 'loader.php');
 CustomTablesLoader();
 
-$ct = new CT($params, true, $module->id);
+$paramsArray = Params::menuParamsRegistry2Array($params);
+$ct = new CT($paramsArray, true, $module->id);
 
 if (!$ct->CheckAuthorization(1)) {
 	//not authorized
-	Factory::getApplication()->enqueueMessage(CTMiscHelper::JTextExtended('COM_CUSTOMTABLES_NOT_AUTHORIZED'), 'error');
+	Factory::getApplication()->enqueueMessage(common::translate('COM_CUSTOMTABLES_NOT_AUTHORIZED'), 'error');
 	return false;
 }
 

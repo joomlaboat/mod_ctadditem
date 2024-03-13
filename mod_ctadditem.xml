@@ -3,13 +3,13 @@
     <name>Custom Tables - Add Record</name>
 
     <author>JoomlaBoat.com</author>
-    <creationDate>February 2024</creationDate>
+    <creationDate>March 2024</creationDate>
     <copyright>Copyright (C) 2018-2024 Ivan Komlev. All rights reserved.</copyright>
     <license>GNU General Public License</license>
     <authorEmail>support@joomlaboat.com</authorEmail>
     <authorUrl>https://www.joomlaboat.com/</authorUrl>
-    <version>3.2.7</version>
-    <description>Cutsom Tables module to add new records.</description>
+    <version>3.2.8</version>
+    <description>Custom Tables module to add new records.</description>
     <files>
         <filename module="mod_ctadditem">mod_ctadditem.php</filename>
         <filename>index.html</filename>
@@ -18,10 +18,13 @@
     <config>
         <fields name="params">
             <fieldset name="basic" addfieldpath="components/com_customtables/fields/">
-                <field type="estable" name="establename" default="" label="Select Table"
-                       description="Select Listing Table"/>
-                <field type="eseditlayout" name="eseditlayout" default="" label="Edit Layout"
-                       description="Select Edit Layout"/>
+
+                <field type="CTTable" name="establename" label="Table"
+                       description="Select the Table for reading the records. You can create a new table in Components/Custom Tables/Tables."
+                       required="true"/>
+
+                <field type="CTEditLayout" name="eseditlayout" default="" label="Edit Layout"
+                       description="Select Edit Form Layout. This parameter is available on most of the Custom Tables menu item types because the edit form can be opened from the Records (catalog) page, or even as the modal form."/>
             </fieldset>
 
             <fieldset name="FILTERS">
