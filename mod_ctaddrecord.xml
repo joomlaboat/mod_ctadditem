@@ -11,7 +11,7 @@
     <version>3.2.9</version>
     <description>Custom Tables module to add new records.</description>
     <files>
-        <filename module="mod_ctadditem">mod_ctadditem.php</filename>
+        <filename module="mod_ctaddrecord">mod_ctaddrecord.php</filename>
         <filename>index.html</filename>
     </files>
 
@@ -181,7 +181,7 @@ In this case, there will be two checks: the first one will check if the record b
         </fields>
     </config>
     <languages>
-        <language tag="en-GB">en-GB.mod_ctadditem.ini</language>
+        <language tag="en-GB">en-GB.mod_ctaddrecord.ini</language>
     </languages>
 
 </extension>

@@ -1,2 +1,2 @@
-# mod_ctadditem
-Custom Tables - Add Item (Edit Form) module.
+# mod_ctaddrecord
+Custom Tables - Add Record (Edit Form) module.
