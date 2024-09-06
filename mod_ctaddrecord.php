@@ -2,7 +2,7 @@
 /**
  * CustomTables Joomla! 3.x & 4.x Native Component
  * @author Ivan komlev <support@joomlaboat.com>
- * @link http://www.joomlaboat.com
+ * @link https://www.joomlaboat.com
  * @license GNU/GPL
  **/
 
@@ -16,6 +16,7 @@ use CustomTables\CTUser;
 use CustomTables\Params;
 use CustomTables\Edit;
 use CustomTables\common;
+use Exception;
 use Joomla\CMS\Factory;
 
 jimport('joomla.html.pane');
@@ -41,11 +42,15 @@ if (!isset($ct->Table->fields) or !is_array($ct->Table->fields))
 	return false;
 
 $formLink = $ct->Env->WebsiteRoot . 'index.php?option=com_customtables&amp;view=edititem' . ($ct->Params->ItemId != 0 ? '&amp;Itemid=' . $ct->Params->ItemId : '');
-//if (!is_null($ct->Params->ModuleId))
-$formLink .= '&amp;ModuleId=' . $module->id;
+if (!is_null($ct->Params->ModuleId))
+    $formLink .= '&amp;ModuleId=' . $module->id;
 
 $editForm = new Edit($ct);
 $editForm->load();
 
 // Display the template
-echo $editForm->render(null, $formLink, 'ctEditForm');
+try {
+    echo @$editForm->render(null, $formLink, 'ctEditForm');
+}catch(Exception $e){
+    echo $e->getMessage();
+}
