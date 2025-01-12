@@ -27,8 +27,8 @@ $path = JPATH_SITE . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 
 require_once($path . 'loader.php');
 CustomTablesLoader();
 
-$paramsArray = Params::menuParamsRegistry2Array($params);
-$ct = new CT($paramsArray, true, $module->id);
+$ct = new CT([], true);
+$ct->Params->constructJoomlaParams($module->id);
 
 if (!$ct->CheckAuthorization(1)) {
 	//not authorized
@@ -36,8 +36,7 @@ if (!$ct->CheckAuthorization(1)) {
 	return false;
 }
 
-$tableName = $params['establename'];
-$ct->getTable($tableName);
+$ct->getTable($ct->Params->tableName);
 if (!isset($ct->Table->fields) or !is_array($ct->Table->fields))
 	return false;
 
