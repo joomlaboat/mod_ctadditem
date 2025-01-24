@@ -18,6 +18,8 @@ use CustomTables\Edit;
 use CustomTables\common;
 use Exception;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\Registry\Registry;
 
 jimport('joomla.html.pane');
 
@@ -28,28 +30,40 @@ require_once($path . 'loader.php');
 CustomTablesLoader();
 
 $ct = new CT([], true);
-$ct->Params->constructJoomlaParams($module->id);
+$menu_params = new Registry;//Joomla Specific
+$menu_params->loadString($module->params);
+$menu_paramsArray = Params::menuParamsRegistry2Array($menu_params);
+$ct->Params->setParams($menu_paramsArray);
+$ct->Params->ModuleId = $module->id;
 
-if (!$ct->CheckAuthorization(1)) {
-	//not authorized
-	Factory::getApplication()->enqueueMessage(common::translate('COM_CUSTOMTABLES_NOT_AUTHORIZED'), 'error');
-	return false;
-}
 
 $ct->getTable($ct->Params->tableName);
 if (!isset($ct->Table->fields) or !is_array($ct->Table->fields))
 	return false;
 
-$formLink = $ct->Env->WebsiteRoot . 'index.php?option=com_customtables&amp;view=edititem' . ($ct->Params->ItemId != 0 ? '&amp;Itemid=' . $ct->Params->ItemId : '');
-if (!is_null($ct->Params->ModuleId))
-    $formLink .= '&amp;ModuleId=' . $module->id;
+$layout = new Layouts($ct);
+$taskObjectName = 'task' . $module->id;
+$task = common::inputPostCmd($taskObjectName);
+$result = $layout->renderMixedLayout($ct->Params->editLayout, CUSTOMTABLES_LAYOUT_TYPE_EDIT_FORM, $task);
 
-$editForm = new Edit($ct);
-$editForm->load();
+if ($result['success']) {
 
-// Display the template
-try {
-    echo @$editForm->render(null, $formLink, 'ctEditForm');
-}catch(Exception $e){
-    echo $e->getMessage();
+	if (isset($result['redirect']))
+		common::redirect($result['redirect'],$result['message'], true);
+
+	common::loadJSAndCSS($ct->Params, $ct->Env, $ct->Table->fieldInputPrefix);
+
+	if (!empty($result['style']))
+		$ct->document->addCustomTag('<style>' . $result['style'] . '</style>');
+
+	if (!empty($result['script']))
+		$ct->document->addCustomTag('<script>' . $result['script'] . '</script>');
+
+	if (isset($result['html'])) {
+
+		common::loadJSAndCSS($ct->Params, $ct->Env, $ct->Table->fieldInputPrefix);
+		echo $result['html'];
+	}
+} else {
+	common::enqueueMessage($result['message'], 'error');
 }
