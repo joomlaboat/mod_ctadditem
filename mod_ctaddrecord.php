@@ -54,10 +54,10 @@ if ($result['success']) {
 	common::loadJSAndCSS($ct->Params, $ct->Env, $ct->Table->fieldInputPrefix);
 
 	if (!empty($result['style']))
-		$ct->document->addCustomTag('<style>' . $result['style'] . '</style>');
+		Factory::getApplication()->getDocument()->addCustomTag('<style>' . $result['style'] . '</style>');
 
 	if (!empty($result['script']))
-		$ct->document->addCustomTag('<script>' . $result['script'] . '</script>');
+		Factory::getApplication()->getDocument()->addCustomTag('<script>' . $result['script'] . '</script>');
 
 	if (isset($result['html'])) {
 
