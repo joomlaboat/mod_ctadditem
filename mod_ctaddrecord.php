@@ -59,10 +59,10 @@ if ($result['success']) {
 	if (!empty($result['script']))
 		Factory::getApplication()->getDocument()->addCustomTag('<script>' . $result['script'] . '</script>');
 
-	if (isset($result['html'])) {
+	if (isset($result['content'])) {
 
 		common::loadJSAndCSS($ct->Params, $ct->Env, $ct->Table->fieldInputPrefix);
-		echo $result['html'];
+		echo $result['content'];
 	}
 } else {
 	common::enqueueMessage($result['message'], 'error');
